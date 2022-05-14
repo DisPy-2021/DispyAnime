@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+ db:
+  build:
+   context: ./docker/database
+  container_name: MAL
+  ports:
+  - 3306:3306
+  networks:
+   - default
+
+ api:
+  build:
+   context: .
+  container_name: api_
+  ports:
+  - 8080:8080
+  networks:
+   - default
+  deploy:
+    restart_policy:
+     condition: on-failure
+     delay: 5s
+     max_attempts: 10
+     window: 10s
+
+  environment:
+   - DATABASE_URL=18.231.166.182
